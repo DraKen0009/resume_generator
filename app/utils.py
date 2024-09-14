@@ -64,7 +64,7 @@ def validate_gemini_key(api_key):
     try:
         genai.configure(api_key=api_key)
         # Make a simple API call to check if the key is valid
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('gemini-1.5-flash')
         model.generate_content("Test")
         return True
     except google_exceptions.PermissionDenied:
