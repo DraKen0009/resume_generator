@@ -13,12 +13,17 @@ templates = Jinja2Templates(directory="templates")
 # Mount the static files directory
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+
 @app.post("/upload")
 async def upload_file(file: UploadFile = File(...), openai_key: str = Form(None), gemini_key: str = Form(None)):
     if openai_key == "" and gemini_key == "":
         raise HTTPException(status_code=400, detail="Either Gemini or OpenAI key must be provided")
     if openai_key != "" and gemini_key != "":
         raise HTTPException(status_code=400, detail="Please provide only one API key (either Gemini or OpenAI)")
+    if file.content_type != "application/pdf":
+        raise HTTPException(status_code=400, detail="Only PDF files are allowed")
+    if file.size > 524288:  # 512 KB in bytes
+        raise HTTPException(status_code=413, detail="File size exceeds 512 KB")
 
     try:
         # Save the uploaded PDF file

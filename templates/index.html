@@ -11,6 +11,7 @@
         <div class="form-group">
             <label for="file">Select PDF file:</label>
             <input type="file" id="file" name="file" accept=".pdf" required>
+            <p id="file-error" style="color: red;"></p>
         </div>
         <div class="form-group">
             <label for="openai_key">OpenAI API Key (optional):</label>
@@ -23,5 +24,21 @@
         <button type="submit">Generate Resume</button>
     </form>
 </div>
+<script>
+    const fileInput = document.getElementById('file');
+    const fileSizeError = document.getElementById('file-error');
+
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+
+        if (file.size > 524288) { // 512 KB in bytes
+            fileSizeError.textContent = "File size exceeds 512 KB";
+        } else if (file.type !== "application/pdf") {
+            fileSizeError.textContent = "Only PDF files are allowed";
+        } else {
+            fileSizeError.textContent = "";
+        }
+    });
+</script>
 </body>
 </html>
