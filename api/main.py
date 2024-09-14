@@ -2,9 +2,8 @@ from fastapi import FastAPI, File, UploadFile, Form, Request, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
 import os
-from .utils import extract_text_from_pdf, generate_html_resume
+from utils import extract_text_from_pdf, generate_html_resume
 
 app = FastAPI()
 
@@ -13,11 +12,6 @@ templates = Jinja2Templates(directory="templates")
 
 # Mount the static files directory
 app.mount("/static", StaticFiles(directory="static"), name="static")
-
-
-class OpenAIConfig(BaseModel):
-    api_key: str
-
 
 @app.post("/upload")
 async def upload_file(file: UploadFile = File(...), openai_key: str = Form(None), gemini_key: str = Form(None)):
@@ -57,4 +51,4 @@ async def read_root(request: Request):
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
