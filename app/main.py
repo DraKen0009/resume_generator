@@ -3,7 +3,6 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-import os
 from .utils import extract_text_from_pdf, generate_html_resume
 
 app = FastAPI()
