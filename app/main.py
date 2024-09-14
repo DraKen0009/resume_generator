@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+import os
 from .utils import extract_text_from_pdf, generate_html_resume
 
 app = FastAPI()
@@ -28,9 +29,14 @@ async def upload_file(file: UploadFile = File(...), openai_key: str = Form(None)
 
     try:
         # Save the uploaded PDF file
-        with open(file.filename, "wb") as buffer:
+        temp_file_path = os.path.join('/tmp', file.filename)
+
+        # Save the uploaded PDF file
+        with open(temp_file_path, "wb") as buffer:
             buffer.write(await file.read())
 
+        # Extract text from PDF
+        pdf_text = extract_text_from_pdf(temp_file_path)
         # Extract text from PDF
         pdf_text = extract_text_from_pdf(file.filename)
 
@@ -42,7 +48,6 @@ async def upload_file(file: UploadFile = File(...), openai_key: str = Form(None)
         raise HTTPException(status_code=400, detail=str(e))
     finally:
         # Clean up: remove the temporary PDF file
-        import os
         if os.path.exists(file.filename):
             os.remove(file.filename)
 
