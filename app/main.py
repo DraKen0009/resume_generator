@@ -23,7 +23,6 @@ class OpenAIConfig(BaseModel):
 async def upload_file(file: UploadFile = File(...), openai_key: str = Form(None), gemini_key: str = Form(None)):
     if openai_key == "" and gemini_key == "":
         raise HTTPException(status_code=400, detail="Either Gemini or OpenAI key must be provided")
-
     if openai_key != "" and gemini_key != "":
         raise HTTPException(status_code=400, detail="Please provide only one API key (either Gemini or OpenAI)")
 
