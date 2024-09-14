@@ -37,8 +37,6 @@ async def upload_file(file: UploadFile = File(...), openai_key: str = Form(None)
 
         # Extract text from PDF
         pdf_text = extract_text_from_pdf(temp_file_path)
-        # Extract text from PDF
-        pdf_text = extract_text_from_pdf(file.filename)
 
         # Generate HTML resume using the provided API
         html_resume = generate_html_resume(pdf_text, openai_key, gemini_key)
