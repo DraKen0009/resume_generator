@@ -7,7 +7,7 @@ This application takes a LinkedIn PDF download and generates an HTML resume usin
 ```
 resume_generator/
 │
-├── app/
+├── api/
 │   ├── __init__.py
 │   ├── main.py
 │   └── utils.py
@@ -50,8 +50,13 @@ resume_generator/
 
 1. Created a FastAPI application with endpoints for file upload and HTML generation.
 2. Implemented PDF text extraction using PyPDF2.
-3. Integrated OpenAI's API for HTML resume generation.
+3. Integrated OpenAI's/GEMINI's  API for HTML resume generation.
 4. Set up deployment configuration for Vercel.
-5. Ensured secure handling of the OpenAI API key by taking it as user input.
+5. Ensured secure handling of the OpenAI/GEMINI API key by taking it as user input.
 6. Structured the project for better organization and maintainability.
 
+## NOTE
+> - Tested only with Gemini Api key. ( Bcz I don't have OpenAI's API key)
+> - Timeout is 60 second
+> - Document size limit is 512Kb
+> - Document should only be a PDF file
